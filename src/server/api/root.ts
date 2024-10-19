@@ -1,7 +1,6 @@
-import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
-
-import { postRouter } from "@/server/api/routers/post";
-import { contractRouter } from "@/server/api/routers/safe";
+import { postRouter } from "./routers/post";
+import { createCallerFactory, createTRPCRouter } from "./trpc";
+import { safeBalanceRouter } from "./routers/safeBalance";
 
 /**
  * This is the primary router for your server.
@@ -10,7 +9,7 @@ import { contractRouter } from "@/server/api/routers/safe";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  safe: contractRouter,
+  safe: safeBalanceRouter,
 });
 
 // export type definition of API

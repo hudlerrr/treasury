@@ -1,18 +1,15 @@
 import { postRouter } from "./routers/post";
 import { createCallerFactory, createTRPCRouter } from "./trpc";
 import { safeBalanceRouter } from "./routers/safeBalance";
+import { etherscanTxRouter } from "./routers/etherscanTx";
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
+
 export const appRouter = createTRPCRouter({
   post: postRouter,
   safe: safeBalanceRouter,
+  etherscan: etherscanTxRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;
 
 //  * Create a server-side caller for the tRPC API.

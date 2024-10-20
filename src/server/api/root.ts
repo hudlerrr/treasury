@@ -2,12 +2,14 @@ import { postRouter } from "./routers/post";
 import { createCallerFactory, createTRPCRouter } from "./trpc";
 import { safeBalanceRouter } from "./routers/safeBalance";
 import { etherscanTxRouter } from "./routers/etherscanTx";
+import { transactionSummaryRouter } from "./routers/transactionSummary";
 
 
 export const appRouter = createTRPCRouter({
   post: postRouter,
   safe: safeBalanceRouter,
   etherscan: etherscanTxRouter,
+  transactionSummary: transactionSummaryRouter,
 });
 
 export type AppRouter = typeof appRouter;

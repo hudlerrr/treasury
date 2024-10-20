@@ -8,6 +8,8 @@ export async function GET(request: NextRequest) {
   const address = searchParams.get('address');
   const page = searchParams.get('page');
   const offset = searchParams.get('offset');
+  const startDate = searchParams.get('startDate');
+  const endDate = searchParams.get('endDate');
 
   if (!address) {
     return NextResponse.json({ error: 'Address is required' }, { status: 400 });
@@ -19,13 +21,14 @@ export async function GET(request: NextRequest) {
     const result = await caller.etherscan.getTransactions({ 
       address,
       page: page ? parseInt(page) : undefined,
-      offset: offset ? parseInt(offset) : undefined
+      offset: offset ? parseInt(offset) : undefined,
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined
     });
     return NextResponse.json(result);
   } catch (error) {
-    console.error('Error jam:', error);
-    console.error('Error details jam:', JSON.stringify(error, null, 2));
+    console.error('Error:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
     return NextResponse.json({ error: 'An error occurred', details: error.message }, { status: 500 });
   }
 }
-

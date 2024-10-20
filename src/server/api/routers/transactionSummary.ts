@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { etherscanTxRouter } from "./etherscanTx";
+import axios from "axios";
+import { env } from "@/env.js";
 
 export const transactionSummaryRouter = createTRPCRouter({
   getSummary: publicProcedure
@@ -39,17 +41,44 @@ export const transactionSummaryRouter = createTRPCRouter({
         startDate,
         endDate,
         page: 1,
-        offset: 10000 // Adjust as needed
+        offset: 10000 // number of records returned (adjust to how far back you want tx to go)
       });
 
       const summary = transactions.reduce((acc, tx) => {
         const category = tx.type === 'Received' ? 'inflows' : 'outflows';
-        if (!acc[category][tx.tokenSymbol]) {
-          acc[category][tx.tokenSymbol] = 0;
+        const tokenSymbol = tx.tokenSymbol;
+        const tokenValue = Math.round(tx.value); // Keep the token value
+
+        if (!acc[category][tokenSymbol]) {
+          acc[category][tokenSymbol] = { tokenValue: 0 };
         }
-        acc[category][tx.tokenSymbol] += tx.value;
+
+        acc[category][tokenSymbol].tokenValue += tokenValue; // Sum token values
+
         return acc;
       }, { inflows: {}, outflows: {} });
+
+      // Calculate total values in USD
+      let totalInflowsUSD = 0;
+      let totalOutflowsUSD = 0;
+
+      for (const category of ['inflows', 'outflows']) {
+        for (const tokenSymbol in summary[category]) {
+          const tokenPrice = await fetchTokenPrice(tokenSymbol);
+          const totalValueInUSD = Math.round(summary[category][tokenSymbol].tokenValue * tokenPrice);
+          summary[category][tokenSymbol].totalValue = totalValueInUSD; // Update total value in USD
+
+          if (category === 'inflows') {
+            totalInflowsUSD += totalValueInUSD;
+          } else {
+            totalOutflowsUSD += totalValueInUSD;
+          }
+        }
+      }
+
+      // Add total values to the summary
+      summary.inflows.totalValue = totalInflowsUSD;
+      summary.outflows.totalValue = totalOutflowsUSD;
 
       return {
         summary,
@@ -61,3 +90,24 @@ export const transactionSummaryRouter = createTRPCRouter({
     }),
 });
 
+async function fetchTokenPrice(tokenSymbol: string) { 
+    // todo: see if api can take a list of token symbols (429)
+    // todo: filter out random tokens
+  try {
+
+    if(tokenSymbol.includes("USD")) tokenSymbol = "usd"; // todo: is there a specific price for stablecoins
+    
+    const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`);
+    const price = response.data[tokenSymbol.toLowerCase()]?.usd || 0; // Return price or 0 if not found
+
+    if (price === 0) {
+      console.log(`Price not found for token: ${tokenSymbol}. Setting price to 0.`);
+    } else {
+      console.log(`Price found for token: ${tokenSymbol}. Price: ${price}`);
+    }
+    return price;
+  } catch (error) {
+    console.error(`Error fetching price for token: ${tokenSymbol}. Error: ${error.message}`);
+    return 0; 
+  }
+}

@@ -43,6 +43,7 @@ function processSafeBalance(data: any): any {
     };
   });
 
+  //todo: should gov tokens be included in total 
   return {
     message: "Data received from Safe API",
     balances: processedBalances,

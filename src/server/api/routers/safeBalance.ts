@@ -25,14 +25,20 @@ export const safeBalanceRouter = createTRPCRouter({
 });
 
 function processSafeBalance(data: any): any {
+  const totalUsdBalance = parseFloat(data.fiatTotal);
+  
   const processedBalances = data.items.map((item: any) => {
+    const balanceUsd = parseFloat(item.fiatBalance);
+    const percentage = (balanceUsd / totalUsdBalance) * 100;
+    
     return {
       tokenAddress: item.tokenInfo.address,
       tokenSymbol: item.tokenInfo.symbol,
       tokenName: item.tokenInfo.name,
       balance: item.balance,
       balanceInTokens: (Number(item.balance) / Math.pow(10, item.tokenInfo.decimals)).toFixed(2),
-      balanceUsd: parseFloat(item.fiatBalance).toFixed(2),
+      balanceUsd: balanceUsd.toFixed(2),
+      percentage: percentage.toFixed(2),
       logoUri: item.tokenInfo.logoUri
     };
   });
@@ -40,6 +46,6 @@ function processSafeBalance(data: any): any {
   return {
     message: "Data received from Safe API",
     balances: processedBalances,
-    totalBalanceUsd: parseFloat(data.fiatTotal).toFixed(2)
+    totalBalanceUsd: totalUsdBalance.toFixed(2)
   };
 }

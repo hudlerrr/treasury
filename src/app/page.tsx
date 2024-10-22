@@ -6,13 +6,7 @@ import { api, HydrateClient } from "@/trpc/server";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
-  // const contracts = await api.safe.getContracts();
-  const contract = await api.safe.getContract({
-    address: "0x0000000000000000000000000000000000000000",
-  });
   const session = await getServerAuthSession();
-
-  console.log("contract", JSON.stringify(contract, null, 2));
 
   void api.post.getLatest.prefetch();
 
@@ -21,7 +15,6 @@ export default async function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <pre>
-            {/* <code>{JSON.stringify(contract, null, 2)}</code> */}
           </pre>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">

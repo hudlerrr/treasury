@@ -24,21 +24,25 @@ With volatile markets and variable funding, DAOs need robust financial planning 
 ## Done
 #### 1. Treasury Balance (Total Value of Assets)
 Metric: The total value of all tokens held in the treasury wallet(s), aggregated across all assets.
-API Call: http://localhost:3000/api/safe?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9
+http://localhost:3000/api/safe?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9
 
 #### 2. Transaction History
 Metric: A list of all recent transactions (inflows and outflows) from the treasury.
 Data Source:
 Blockchain Explorer APIs: Etherscan, tx from wallet
-API: http://localhost:3000/api/scan/tx?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9&page=1&offset=10
+http://localhost:3000/api/scan/tx?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9&page=1&offset=10
 
 #### 3. Asset Allocation Breakdown
 Metric: Percentage breakdown of assets held in the treasury by token (e.g., 50% ETH, 30% DAI, 20% USDC).
-API: http://localhost:3000/api/safe?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9
+http://localhost:3000/api/safe?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9
 
-#### 4. Runway Tracker [IN PROGRESS]
+#### 4. Runway Tracker 
 Metric: How many months or days the treasury can last based on current spending and recurring costs.
 http://localhost:3000/api/scan/runway?address=0xce4a1E86a5c47CD677338f53DA22A91d85cab2c9
+
+#### 5. Governance proposals tracker
+Metric: Number of active, pending, and completed proposals over a specific period (e.g., past 30 days). Also track proposal success rate and average time to reach a decision - offer insights into governance efficiency and community engagement.
+http://localhost:3000/api/snapshot/proposals?space=tomoondao.eth&first=10&skip=0
 
 ## Learn More
 [T3 Stack](https://create.t3.gg/):

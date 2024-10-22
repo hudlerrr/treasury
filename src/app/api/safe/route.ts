@@ -4,7 +4,6 @@ import { createTRPCContext } from "@/server/api/trpc";
 import { env } from "@/env.js";
 
 export async function GET(request: NextRequest) {
-  console.log("ETHERSCAN_API_KEY in API route:", env.ETHERSCAN_API_KEY);
   const searchParams = request.nextUrl.searchParams;
   const address = searchParams.get('address');
 

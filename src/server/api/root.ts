@@ -3,6 +3,7 @@ import { createCallerFactory, createTRPCRouter } from "./trpc";
 import { safeBalanceRouter } from "./routers/safeBalance";
 import { etherscanTxRouter } from "./routers/etherscanTx";
 import { transactionSummaryRouter } from "./routers/transactionSummary";
+import { runwayRouter } from "./routers/runway"; 
 
 
 export const appRouter = createTRPCRouter({
@@ -10,6 +11,7 @@ export const appRouter = createTRPCRouter({
   safe: safeBalanceRouter,
   etherscan: etherscanTxRouter,
   transactionSummary: transactionSummaryRouter,
+  runway: runwayRouter, 
 });
 
 export type AppRouter = typeof appRouter;

@@ -4,9 +4,11 @@ import { createCaller } from "@/server/api/root";
 
 export const runwayRouter = createTRPCRouter({
   getRunway: publicProcedure
-    .input(z.object({
-      address: z.string(),
-    }))
+    .input(
+      z.object({
+        address: z.string(),
+      }),
+    )
     .query(async ({ input, ctx }) => {
       const runwayCalculation = await calculateRunway(input.address, ctx);
       return runwayCalculation;
@@ -23,19 +25,23 @@ async function calculateRunway(address: string, ctx: any) {
   // Fetch transaction summary to calculate average monthly spending
   const summaryResult = await caller.transactionSummary.getSummary({
     address,
-    dateRange: 'month', // Get the last month's transactions
+    dateRange: "month", // Get the last month's transactions
     startDate: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-    endDate: new Date()
+    endDate: new Date(),
   });
 
-  const totalSpent = Object.values(summaryResult.summary.outflows).reduce((acc, token) => {
-    return acc + (token.totalValue || 0);
-  }, 0);
+  const totalSpent = Object.values(summaryResult.summary.outflows).reduce(
+    (acc, token) => {
+      return acc + (token.totalValue || 0);
+    },
+    0,
+  );
 
   const averageMonthlySpend = totalSpent; // todo: enhance to get average spend instead of just last month
 
   // Calculate runway
-  const runwayMonths = averageMonthlySpend > 0 ? totalBalance / averageMonthlySpend : Infinity; // Avoid division by zero
+  const runwayMonths =
+    averageMonthlySpend > 0 ? totalBalance / averageMonthlySpend : Infinity; // Avoid division by zero
   const runwayYears = Math.floor(runwayMonths / 12);
   const remainingMonths = Math.round(runwayMonths % 12);
   const runway = `${runwayYears} years and ${remainingMonths} months`;
@@ -43,6 +49,6 @@ async function calculateRunway(address: string, ctx: any) {
   return {
     runway,
     totalBalance,
-    averageMonthlySpend
+    averageMonthlySpend,
   };
 }

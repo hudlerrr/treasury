@@ -25,9 +25,9 @@ export const safeBalanceRouter = createTRPCRouter({
 });
 
 function processSafeBalance(data: any): any {
-  const totalUsdBalance = parseFloat(data.fiatTotal);
+    const totalUsdBalance = parseFloat(data.fiatTotal);
   
-  const processedBalances = data.items.map((item: any) => {
+    const processedBalances = data.items.map((item: any) => {
     const balanceUsd = parseFloat(item.fiatBalance);
     const percentage = (balanceUsd / totalUsdBalance) * 100;
     

@@ -8,6 +8,13 @@ export const daos = [
     members: "151",
   },
   {
+    href: "dao/tomoondao.eth",
+    avatarSrc:
+      "https://cdn.stamp.fyi/space/s:cvx.eth?s=164&cb=ee88e4dd9fcaca10",
+    name: "MoonDAO",
+    members: "2435",
+  },
+  {
     href: "dao/ens.eth",
     avatarSrc:
       "https://cdn.stamp.fyi/space/s:ens.eth?s=164&cb=bc8a2856691e05ab",

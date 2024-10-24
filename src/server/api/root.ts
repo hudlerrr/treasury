@@ -6,6 +6,7 @@ import { transactionSummaryRouter } from "./routers/transactionSummary";
 import { runwayRouter } from "./routers/runway";
 import { proposalRouter } from "./routers/proposals";
 import { daoRouter } from "./routers/dao";
+import { daoBaseRouter } from "./routers/daoBase";
 
 export const appRouter = createTRPCRouter({
   post: postRouter,
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   runway: runwayRouter,
   proposals: proposalRouter,
   dao: daoRouter,
+  daoBase: daoBaseRouter,
 });
 
 export type AppRouter = typeof appRouter;

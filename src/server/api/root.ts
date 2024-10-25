@@ -5,8 +5,8 @@ import { etherscanTxRouter } from "./routers/etherscanTx";
 import { transactionSummaryRouter } from "./routers/transactionSummary";
 import { runwayRouter } from "./routers/runway";
 import { proposalRouter } from "./routers/proposals";
-import { daoRouter } from "./routers/dao";
-import { daoBaseRouter } from "./routers/daoBase";
+import { daoRouter } from "./routers/dao/dao";
+import { daoBaseRouter } from "./routers/dao/daoBase";
 
 export const appRouter = createTRPCRouter({
   post: postRouter,

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
 import ky from "ky";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 const TreasurySchema = z.object({
   name: z.string(),

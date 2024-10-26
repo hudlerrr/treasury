@@ -40,7 +40,7 @@ export async function DaoProfileCard({ id }: ProfileProps) {
           <p className="max-w-md text-sm">{response[0]?.about}</p>
         </div>
       </div>
-      <DaoNav />
+      <DaoNav id={id} />
     </>
   );
 }

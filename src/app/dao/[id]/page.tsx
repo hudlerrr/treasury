@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { DaoProfileCard } from "@/components/dao/profile";
 
 type Props = {
   params: {
@@ -12,7 +11,6 @@ type Props = {
 export default async function Overview({ params: { id } }: Props) {
   return (
     <div>
-      <DaoProfileCard id={id} />
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-6 lg:grid-cols-3">
         <Card>
           <CardContent className="p-4">

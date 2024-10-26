@@ -18,6 +18,7 @@ import { NavMain } from "@/components/layout/nav-main";
 import { NavProjects } from "@/components/layout/nav-projects";
 import { NavUser } from "@/components/layout/nav-user";
 import { TeamSwitcher } from "@/components/layout/team-switcher";
+import { SidebarOptInForm } from "../sidebar-opt-in-form";
 import {
   Sidebar,
   SidebarContent,
@@ -167,7 +168,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* <NavUser user={data.user} /> */}
+        <SidebarOptInForm />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

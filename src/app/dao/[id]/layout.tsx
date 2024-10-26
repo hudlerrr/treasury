@@ -9,7 +9,9 @@ export default function DaoLayout({ children }: { children: React.ReactNode }) {
         <AppSidebar />
         <SidebarInset>
           <Header page="dao" />
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+          <div className="m-auto flex w-full flex-1 flex-col gap-4 border pt-0 md:max-w-2xl">
+            {children}
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </div>

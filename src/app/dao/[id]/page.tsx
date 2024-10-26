@@ -1,5 +1,7 @@
-import { Suspense } from "react";
-import { api } from "@/trpc/server";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { DaoProfileCard } from "@/components/dao/profile";
 
 type Props = {
   params: {
@@ -7,62 +9,47 @@ type Props = {
   };
 };
 
-export default async function Dao({ params: { id } }: Props) {
-  // Fetch DAO info based on the DAO name
-  const response = await api.daoBase.getInfo({
-    first: 20,
-    skip: 0,
-    orderBy: "created",
-    id,
-  });
-
-  const treasuries = response[0]?.treasuries ?? [];
-  const treasuryAddress = treasuries[0]?.address;
-
+export default async function Overview({ params: { id } }: Props) {
   return (
     <div>
-      <h1>DAO: {response[0]?.name}</h1>
-      <h1>About: {response[0]?.about}</h1>
-
-      {treasuries.length > 0 && <h3>Treasuries</h3>}
-      {treasuries.map((treasury) => (
-        <div key={treasury.address}>
-          <p>
-            {treasury.name}: {treasury.address}
-          </p>
-        </div>
-      ))}
-
-      <Suspense fallback={<p>Loading treasury balance...</p>}>
-        <TreasuryComponent treasuryAddress={treasuryAddress} />
-      </Suspense>
+      <DaoProfileCard id={id} />
+      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-6 lg:grid-cols-3">
+        <Card>
+          <CardContent className="p-4">
+            <h2 className="mb-2 text-lg font-semibold">Latest Proposal</h2>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Increase funding for developer grants
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium">Votes: 352</span>
+              <Button variant="ghost" size="sm">
+                View <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <h2 className="mb-2 text-lg font-semibold">Treasury Balance</h2>
+            <p className="text-2xl font-bold">8,500 ETH</p>
+            <p className="text-sm text-muted-foreground">≈ $15,300,000 USD</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <h2 className="mb-2 text-lg font-semibold">Recent Transaction</h2>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Sent 50 ETH to Development Fund
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium">10 minutes ago</span>
+              <Button variant="ghost" size="sm">
+                Details <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
-
-const TreasuryComponent = async ({
-  treasuryAddress,
-}: {
-  treasuryAddress: string | undefined;
-}) => {
-  if (!treasuryAddress) {
-    return null;
-  }
-
-  const daoBalance = await api.safe
-    .getBalance({ address: treasuryAddress })
-    .catch(() => {
-      return null;
-    });
-
-  return (
-    <div>
-      {daoBalance && (
-        <div>
-          <h2>DAO Balance</h2>
-          <pre>{JSON.stringify(daoBalance, null, 2)}</pre>
-        </div>
-      )}
-    </div>
-  );
-};

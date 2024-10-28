@@ -17,7 +17,7 @@ export default function DaoLayout({ params: { id }, children }: Props) {
         <AppSidebar />
         <SidebarInset>
           <Header page="dao" />
-          <div className="m-auto flex w-full flex-1 flex-col gap-4 border pt-0 md:max-w-2xl">
+          <div className="m-auto flex w-full flex-1 flex-col gap-4 border pt-0">
             <DaoProfileCard id={id} />
             {children}
           </div>

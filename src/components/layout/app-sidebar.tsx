@@ -38,11 +38,6 @@ const data = {
   ],
   navMain: [
     {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
       title: "Ask AI",
       url: "#",
       icon: Sparkles,
@@ -51,7 +46,6 @@ const data = {
       title: "Home",
       url: "/",
       icon: Home,
-      isActive: true,
     },
     {
       title: "Explore",

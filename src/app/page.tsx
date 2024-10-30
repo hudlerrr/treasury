@@ -119,7 +119,7 @@ export default function Home() {
                   Up-to-Date Insights
                 </div>
                 <p className="text-gray-500 dark:text-gray-400">
-                  Dynamically track your treasury's financial health in
+                  Dynamically track your treasury&apos;s financial health in
                   real-time, from asset balances to spending patterns. Stay
                   informed and react quickly to changes, ensuring smooth and
                   transparent operations.
@@ -172,10 +172,10 @@ export default function Home() {
                   Real-Time Treasury Overview
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  A live, up-to-date snapshot of the DAO's current financial
-                  state. This includes total assets, token balances, categorized
-                  inflows and outflows (e.g., grants, operational expenses,
-                  income), and other essential financial data.
+                  A live, up-to-date snapshot of the DAO&apos;s current
+                  financial state. This includes total assets, token balances,
+                  categorized inflows and outflows (e.g., grants, operational
+                  expenses, income), and other essential financial data.
                 </p>
               </div>
               <div className="grid gap-1 border-b border-r border-gray-200 p-6">
@@ -183,7 +183,7 @@ export default function Home() {
                   Proposal Tracking & Governance Integration
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Seamlessly integrates with your DAO's governance process,
+                  Seamlessly integrates with your DAO&apos;s governance process,
                   allowing you to track proposals, view voting outcomes, and
                   understand treasury fund allocations based on approved
                   proposals.
@@ -195,8 +195,8 @@ export default function Home() {
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Create budgets, forecast future expenditures, and run dynamic
-                  scenario models (e.g., "What if we reduce spending by 10%?" or
-                  "What if token prices drop 20%?")
+                  scenario models (e.g., &quot;What if we reduce spending by
+                  10%?&quot; or &quot;What if token prices drop 20%?&quot;)
                 </p>
               </div>
               <div className="grid gap-1 border-b border-r border-gray-200 p-6">

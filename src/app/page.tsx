@@ -43,7 +43,7 @@ export default function Home() {
           </Link>
           <Link
             className="text-sm font-medium underline-offset-4 hover:underline"
-            href="#"
+            href="#features"
           >
             Features
           </Link>
@@ -78,11 +78,11 @@ export default function Home() {
                   and make data-driven governance decisions—all in one place.
                 </p>
               </div>
-              <div className="space-x-4">
+              <Link href="/explore" className="space-x-4">
                 <Button className="border-2 border-[#ffffff] bg-[#c0c0c0] text-black shadow-[inset_-1px_-1px_#0a0a0a,inset_1px_1px_#dfdfdf,inset_-2px_-2px_grey,inset_2px_2px_#fff] transition-all duration-200 hover:rounded-lg hover:bg-[#d0d0d0]">
                   Explore
                 </Button>
-              </div>
+              </Link>
             </div>
           </div>
         </section>
@@ -149,7 +149,10 @@ export default function Home() {
           <div className="container space-y-12 px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-[#c0c0c0] px-3 py-1 text-sm">
+                <div
+                  id="features"
+                  className="inline-block rounded-lg bg-[#c0c0c0] px-3 py-1 text-sm"
+                >
                   Features
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">

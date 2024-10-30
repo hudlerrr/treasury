@@ -1,3 +1,4 @@
+import { FinancialDashboard } from "@/components/financial-dashboard";
 import { api } from "@/trpc/server";
 
 type Props = {
@@ -11,9 +12,8 @@ export default async function Runway({ params: { id } }: Props) {
 
   return (
     <div>
-      <h1>Runway</h1>
-      {id}
       {/* <pre>{JSON.stringify(runway, null, 2)}</pre> */}
+      <FinancialDashboard />
     </div>
   );
 }

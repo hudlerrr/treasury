@@ -2,6 +2,7 @@
 export const daos = [
   {
     href: "dao/aave.eth",
+    id: "aave.eth",
     avatarSrc:
       "https://cdn.stamp.fyi/space/s:aave.eth?s=164&cb=306a665387fde471",
     name: "Aave",
@@ -9,13 +10,22 @@ export const daos = [
   },
   {
     href: "dao/tomoondao.eth",
+    id: "tomoondao.eth",
     avatarSrc:
       "https://cdn.stamp.fyi/space/s:cvx.eth?s=164&cb=ee88e4dd9fcaca10",
     name: "MoonDAO",
+    overview: {
+      mission: "🌌 MoonDAO aims to decentralize access to space, creating a transparent and international approach to space exploration.",
+      community: "🚀 It operates as a decentralized autonomous organization (DAO), where members can participate in governance by holding the MOONEY token.",
+      achievements: "🏆 MoonDAO has successfully sent members to space through a community-governed process and plans to establish a lunar settlement.",
+      funding: "💰 Over $800,000 has been raised for space research projects through community contributions.",
+    },
+    treasury: "800K",
     members: "2435",
   },
   {
     href: "dao/ens.eth",
+    id: "ens.eth",
     avatarSrc:
       "https://cdn.stamp.fyi/space/s:ens.eth?s=164&cb=bc8a2856691e05ab",
     name: "ENS",

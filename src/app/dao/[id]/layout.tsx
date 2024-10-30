@@ -5,15 +5,17 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { BarChart3, FileText, GitFork, Menu, Moon, Search, Settings2, Wallet } from "lucide-react"
 import Image from "next/image"
+import { daos } from "@/server/db/daos";
 
 type Props = {
-    children: React.ReactNode;
-    params: {
-      id: string;
-    };
+  children: React.ReactNode;
+  params: {
+    id: string;
   };
+};
 
 export default function Component({ params: { id }, children }: Props) {
+  const currentDAO = daos.find((dao) => dao.id === id);
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
@@ -24,7 +26,7 @@ export default function Component({ params: { id }, children }: Props) {
           </Button>
           <div className="flex items-center gap-2">
             <Wallet className="h-6 w-6" />
-            <span className="font-semibold">TreasuryDAO</span>
+            <span className="font-semibold">TreasureCorp</span>
           </div>
           <div className="flex-1 flex items-center gap-4 ml-4">
             <div className="relative w-full max-w-md">
@@ -84,8 +86,8 @@ export default function Component({ params: { id }, children }: Props) {
           <div className="h-40 bg-muted/30 relative">
             <div className="absolute bottom-4 left-4 flex items-end gap-4">
               <div className="h-20 w-20 rounded-full bg-background border-4 border-background overflow-hidden">
-                <Image
-                  src="/placeholder.svg"
+                <img
+                  src={currentDAO.avatarSrc}
                   alt="DAO Logo"
                   width={80}
                   height={80}
@@ -94,15 +96,13 @@ export default function Component({ params: { id }, children }: Props) {
               </div>
               <div className="mb-2">
                 <h1 className="text-2xl font-bold flex items-center gap-2">
-                  TreasuryDAO
+                  {currentDAO.name}
                   <Badge variant="secondary">Verified</Badge>
                 </h1>
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <span>$1.2M Total Value</span>
+                  <span>${currentDAO.treasury} Total Value</span>
                   <span>•</span>
-                  <span>24 Assets</span>
-                  <span>•</span>
-                  <span>156 Holders</span>
+                  <span>{currentDAO.members} Holders</span>
                 </div>
               </div>
             </div>

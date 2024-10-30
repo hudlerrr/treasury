@@ -78,5 +78,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Menlo', monospace;
+  }
+  .text-muted-foreground {
+    font-size: 0.525rem;
   }
 }

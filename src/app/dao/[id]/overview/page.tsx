@@ -1,4 +1,5 @@
-import { Card } from "@/components/ui/card"
+import { daos } from "@/server/db/daos";
+import { Card } from "@/components/ui/card";
 
 type Props = {
   params: {
@@ -7,15 +8,29 @@ type Props = {
 };
 
 export default function OverviewPage({ params: { id } }: Props) {
+  // Find the DAO by ID
+  const dao = daos.find((dao) => dao.id === id);
+
+  if (!dao) {
+    return <div>DAO not found</div>;
+  }
+
+  const overview = dao.overview;
+
   return (
     <div className="p-6">
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-3">Overview</h2>
-        <p className="text-muted-foreground">
-          TreasuryDAO manages a diverse portfolio of digital assets with a focus on maintaining 
-          stable reserves while pursuing strategic investments in DeFi protocols. Our treasury 
-          operations are governed by community proposals and managed by elected stewards.
-        </p>
+        <ul className="text-muted-foreground">
+          {overview && (
+            <>
+              <li className="text-sm">{overview.mission}</li>
+              <li className="text-sm">{overview.community}</li>
+              <li className="text-sm">{overview.achievements}</li>
+              <li className="text-sm">{overview.funding}</li>
+            </>
+          )}
+        </ul>
       </div>
 
       <div className="space-y-4">
@@ -43,5 +58,5 @@ export default function OverviewPage({ params: { id } }: Props) {
       </div>
       <p>ID: {id}</p>
     </div>
-  )
+  );
 }

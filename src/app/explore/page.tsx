@@ -9,7 +9,7 @@ export default async function Explore() {
       <ul className="faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 md:grid-cols-3 lg:grid-cols-4">
         {daos.map((dao) => (
           <li key={dao.href}>
-            <a href={dao.href} className="" key={dao.href}>
+            <a href={`${dao.href}/overview`} className="" key={dao.href}>
               <div
                 className="border-skin-border bg-skin-block-bg hover:border-skin-text mb-0 flex items-center justify-center border-y text-center text-base transition-all hover:shadow-md md:rounded-xl md:border"
                 style={{ height: "266px" }}

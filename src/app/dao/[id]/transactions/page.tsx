@@ -1,3 +1,4 @@
+import { InteractiveBarChart } from "@/components/charts/bar-chart";
 import { api } from "@/trpc/server";
 
 type Props = {
@@ -14,7 +15,7 @@ export default async function Transactions({ params: { id } }: Props) {
 
   return (
     <div>
-      <h1>Proposals</h1>
+      <InteractiveBarChart />
       {/* <pre>{JSON.stringify(proposals, null, 2)}</pre> */}
     </div>
   );

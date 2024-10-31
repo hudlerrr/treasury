@@ -4,6 +4,7 @@ import { api } from "@/trpc/server";
 import TabbedInterface from "@/components/overview-tab";
 import { TreasuryChart } from "@/components/charts/treasury-chart";
 import { AssetDonut } from "@/components/charts/asset-donut";
+import { useState } from "react";
 
 type Props = {
   params: {
@@ -29,6 +30,15 @@ export default async function OverviewPage({ params: { id } }: Props) {
 
   const overview = dao.overview;
 
+  // Fetch inflow/outflow data
+  const cashFlowSummary = await api.transactionSummary.getSummary({
+    address,
+    dateRange: "month", // Default to month
+  });
+
+  const inflow = cashFlowSummary.summary.inflows.totalValue;
+  const outflow = cashFlowSummary.summary.outflows.totalValue;
+
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -50,15 +60,18 @@ export default async function OverviewPage({ params: { id } }: Props) {
           <TabbedInterface balanceResponse={balanceResponse} transactionsResponse={transactionsResponse} />
         </div>
         <div className="space-y-4 flex-1">
-          <div className="flex justify-between mb-4">
-            <div>
-              <h2 className="font-semibold">INFLOW / OUTFLOW</h2>
-            </div>
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col mb-4">
+            <h2 className="font-semibold">INFLOW / OUTFLOW</h2>
+            <p className="text-sm mb-2">
+              Over the past month, your cash flow has been:
+            </p>
+            <div className="flex justify-between">
               <div className="text-sm text-muted-foreground">Inflow:</div>
-              <div className="font-medium">$0</div>
+              <div className="font-medium">${inflow.toLocaleString()}</div>
+            </div>
+            <div className="flex justify-between">
               <div className="text-sm text-muted-foreground">Outflow:</div>
-              <div className="font-medium">$0</div>
+              <div className="font-medium">${outflow.toLocaleString()}</div>
             </div>
           </div>
 

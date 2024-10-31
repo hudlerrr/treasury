@@ -34,32 +34,42 @@ export const etherscanTxRouter = createTRPCRouter({
   getTransactions: publicProcedure
     .input(EtherscanInputSchema)
     .query(async ({ input }) => {
-      const baseUrl = "https://api.etherscan.io/api";
-      const endpoint = `${baseUrl}?module=account&action=tokentx&address=${input.address}&page=${input.page}&offset=${input.offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
-
-      try {
-        const response = await ky.get(endpoint).json<EtherscanResponse>();
-
-        const parsedResponse = EtherscanResponseSchema.parse(response);
-
-        if (parsedResponse.status !== "1") {
-          throw new Error(`Etherscan API error: ${parsedResponse.message}`);
-        }
-
-        return processEtherscanTx(
-          parsedResponse.result,
-          input.address,
-          input.startDate,
-          input.endDate,
-        );
-      } catch (error) {
-        console.error("Error fetching transactions from Etherscan:", error);
-        throw new Error(
-          "An error occurred while fetching transactions from Etherscan",
-        );
-      }
+      return getEtherscanTx(input);
     }),
 });
+
+async function getEtherscanTx({
+  address,
+  page,
+  offset,
+  startDate,
+  endDate,
+}: EtherscanInput) {
+  const baseUrl = "https://api.etherscan.io/api";
+  const endpoint = `${baseUrl}?module=account&action=tokentx&address=${address}&page=${page}&offset=${offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
+
+  try {
+    const response = await ky.get(endpoint).json<EtherscanResponse>();
+
+    const parsedResponse = EtherscanResponseSchema.parse(response);
+
+    if (parsedResponse.status !== "1") {
+      throw new Error(`Etherscan API error: ${parsedResponse.message}`);
+    }
+
+    return processEtherscanTx(
+      parsedResponse.result,
+      address,
+      startDate,
+      endDate,
+    );
+  } catch (error) {
+    console.error("Error fetching transactions from Etherscan:", error);
+    throw new Error(
+      "An error occurred while fetching transactions from Etherscan",
+    );
+  }
+}
 
 // Process transactions with proper type annotations
 function processEtherscanTx(
@@ -106,3 +116,5 @@ function processEtherscanTx(
       };
     });
 }
+
+export { getEtherscanTx };

@@ -19,7 +19,7 @@ export default async function OverviewPage({ params: { id } }: Props) {
   const transactionsResponse = await api.etherscan.getTransactions({
     address,
     page: 1,
-    limit: 10,
+    // limit: 10,
   });
 
   const dao = daos.find((dao) => dao.id === id);
@@ -32,7 +32,7 @@ export default async function OverviewPage({ params: { id } }: Props) {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-3">Overview</h2>
+        <h2 className="mb-3 text-xl font-semibold">Overview</h2>
         <ul className="text-muted-foreground">
           {overview && (
             <>
@@ -46,11 +46,14 @@ export default async function OverviewPage({ params: { id } }: Props) {
       </div>
 
       <div className="flex space-x-4">
-        <div className="space-y-4 flex-1">
-          <TabbedInterface balanceResponse={balanceResponse} transactionsResponse={transactionsResponse} />
+        <div className="flex-1 space-y-4">
+          <TabbedInterface
+            balanceResponse={balanceResponse}
+            transactionsResponse={transactionsResponse}
+          />
         </div>
-        <div className="space-y-4 flex-1">
-          <div className="flex justify-between mb-4">
+        <div className="flex-1 space-y-4">
+          <div className="mb-4 flex justify-between">
             <div>
               <h2 className="font-semibold">INFLOW / OUTFLOW</h2>
             </div>
@@ -63,10 +66,10 @@ export default async function OverviewPage({ params: { id } }: Props) {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <div className="h-40 chart-container">
+            <div className="chart-container h-40">
               <TreasuryChart />
             </div>
-            <div className="h-40 chart-container">
+            <div className="chart-container h-40">
               <AssetDonut />
             </div>
           </div>

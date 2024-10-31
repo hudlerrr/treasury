@@ -83,4 +83,7 @@
   .text-muted-foreground {
     font-size: 0.525rem;
   }
+  .chart-container {
+    margin-bottom: 20px; /* Adjust as needed */
+  }
 }

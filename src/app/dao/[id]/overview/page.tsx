@@ -1,5 +1,9 @@
 import { daos } from "@/server/db/daos";
 import { Card } from "@/components/ui/card";
+import { api } from "@/trpc/server";
+import TabbedInterface from "@/components/overview-tab";
+import { TreasuryChart } from "@/components/charts/treasury-chart";
+import { AssetDonut } from "@/components/charts/asset-donut";
 
 type Props = {
   params: {
@@ -7,10 +11,18 @@ type Props = {
   };
 };
 
-export default function OverviewPage({ params: { id } }: Props) {
-  // Find the DAO by ID
-  const dao = daos.find((dao) => dao.id === id);
+export default async function OverviewPage({ params: { id } }: Props) {
+  const response = await api.daoBase.getInfo({ id });
+  const address = response[0].treasuries[0].address;
 
+  const balanceResponse = await api.safe.getBalance({ address });
+  const transactionsResponse = await api.etherscan.getTransactions({
+    address,
+    page: 1,
+    limit: 10,
+  });
+
+  const dao = daos.find((dao) => dao.id === id);
   if (!dao) {
     return <div>DAO not found</div>;
   }
@@ -33,30 +45,33 @@ export default function OverviewPage({ params: { id } }: Props) {
         </ul>
       </div>
 
-      <div className="space-y-4">
-        <h2 className="font-semibold">TREASURY ASSETS</h2>
-        <div className="grid gap-4">
-          <Card className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                  ETH
-                </div>
-                <div>
-                  <div className="font-medium">Ethereum</div>
-                  <div className="text-sm text-muted-foreground">458.24 ETH</div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-medium">$825,832</div>
-                <div className="text-sm text-green-500">+2.4%</div>
-              </div>
+      <div className="flex space-x-4">
+        <div className="space-y-4 flex-1">
+          <TabbedInterface balanceResponse={balanceResponse} transactionsResponse={transactionsResponse} />
+        </div>
+        <div className="space-y-4 flex-1">
+          <div className="flex justify-between mb-4">
+            <div>
+              <h2 className="font-semibold">INFLOW / OUTFLOW</h2>
             </div>
-          </Card>
-          {/* Additional asset cards... */}
+            <div className="flex items-center gap-4">
+              <div className="text-sm text-muted-foreground">Inflow:</div>
+              <div className="font-medium">$0</div>
+              <div className="text-sm text-muted-foreground">Outflow:</div>
+              <div className="font-medium">$0</div>
+            </div>
+          </div>
+
+          <div className="flex flex-col space-y-4">
+            <div className="h-40 chart-container">
+              <TreasuryChart />
+            </div>
+            <div className="h-40 chart-container">
+              <AssetDonut />
+            </div>
+          </div>
         </div>
       </div>
-      <p>ID: {id}</p>
     </div>
   );
 }

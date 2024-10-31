@@ -27,8 +27,7 @@ const TabbedInterface = ({ balanceResponse, transactionsResponse }) => {
 
       {activeTab === "assets" ? (
         <div className="space-y-4">
-          <h2 className="font-semibold">TREASURY ASSETS</h2>
-          <p>{balanceResponse.totalBalanceUsd}</p>
+          <h2 className="font-semibold"> ${balanceResponse.totalBalanceUsd} </h2>
           <div className="grid gap-4">
             {balanceResponse.balances.map((asset) => (
               <Card key={asset.tokenSymbol} className="p-4">

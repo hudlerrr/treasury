@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export default function ScenarioPlanningPage() {
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-6">Scenario Planning</h2>
+      <h2 className="text-2xl font-semibold mb-6">Simulation</h2>
       <div className="mb-4 text-sm text-muted-foreground"> 
         Experiment with treasury strategies and visualize potential outcomes to make data-driven decisions for your DAO’s future.
       </div>

@@ -51,27 +51,27 @@ export function FinancialDashboard() {
   );
 
   return (
-    <div className="flex flex-col items-center space-y-8">
-      <Card className="w-full max-w-3xl">
+    <div className="flex flex-col items-center space-y-4">
+      <Card className="w-full max-w-xl">
         <CardHeader>
-          <CardTitle>Financial Runway</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-lg">Financial Runway</CardTitle>
+          <CardDescription className="text-sm">
             Based on current cash reserves and average burn rate
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-4xl font-bold">{runwayMonths} months</div>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <div className="text-3xl font-bold">{runwayMonths} months</div>
+          <p className="mt-1 text-sm text-muted-foreground">
             With a current cash reserve of ${currentCash.toLocaleString()}{" "}
             thousand and an average monthly burn rate of $
             {Math.abs(averageBurnRate).toFixed(2)} thousand.
           </p>
         </CardContent>
       </Card>
-      <Card className="w-full max-w-3xl">
+      <Card className="w-full max-w-xl">
         <CardHeader>
-          <CardTitle>Revenue and Expenses Chart</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-lg">Revenue and Expenses Chart</CardTitle>
+          <CardDescription className="text-sm">
             Monthly financial overview (in thousands USD)
           </CardDescription>
         </CardHeader>
@@ -87,7 +87,7 @@ export function FinancialDashboard() {
                 color: "hsl(var(--chart-2))",
               },
             }}
-            className="h-[400px]"
+            className="h-[300px]"
           >
             <ResponsiveContainer width="100%" height="100%">
               <LineChart

@@ -4,6 +4,7 @@ import { api } from "@/trpc/server";
 import TabbedInterface from "@/components/overview-tab";
 import { TreasuryChart } from "@/components/charts/treasury-chart";
 import { AssetDonut } from "@/components/charts/asset-donut";
+import { FinancialDashboard } from "@/components/financial-dashboard";
 import { useState } from "react";
 
 type Props = {
@@ -60,26 +61,19 @@ export default async function OverviewPage({ params: { id } }: Props) {
           <TabbedInterface balanceResponse={balanceResponse} transactionsResponse={transactionsResponse} />
         </div>
         <div className="space-y-4 flex-1">
-          <div className="flex flex-col mb-4">
-            <h2 className="font-semibold">INFLOW / OUTFLOW</h2>
-            <p className="text-sm mb-2">
-              Over the past month, your cash flow has been:
-            </p>
-            <div className="flex justify-between">
-              <div className="text-sm text-muted-foreground">Inflow:</div>
-              <div className="font-medium">${inflow.toLocaleString()}</div>
-            </div>
-            <div className="flex justify-between">
-              <div className="text-sm text-muted-foreground">Outflow:</div>
-              <div className="font-medium">${outflow.toLocaleString()}</div>
+          <div className="flex flex-col items-center mb-4">
+            <h2 className="font-semibold">Over the past month, your cash flow has been:</h2>
+            <div className="flex flex-col items-center">
+              <div className="text-sm text-muted-foreground">Inflow: ${inflow.toLocaleString()}</div>
+              <div className="text-sm text-muted-foreground">Outflow: ${outflow.toLocaleString()}</div>
             </div>
           </div>
-
+          <FinancialDashboard/>
           <div className="flex flex-col space-y-4">
-            <div className="h-40 chart-container">
+            <div className="space-y-2">
               <TreasuryChart />
             </div>
-            <div className="h-40 chart-container">
+            <div className="space-y-2">
               <AssetDonut />
             </div>
           </div>

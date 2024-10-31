@@ -26,6 +26,10 @@ export default function ReportingPage() {
             </div>
           </CardContent>
         </Card>
+        <div className="text-center mt-10">
+          <h3 className="text-xl font-semibold mb-2">Under Construction</h3>
+          <p className="text-lg">👩‍🚧</p>
+        </div>
         {/* Additional report cards... */}
       </div>
     </div>

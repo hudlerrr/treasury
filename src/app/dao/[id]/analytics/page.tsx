@@ -9,7 +9,8 @@ import { VolatilityChart } from "@/components/charts/token-volatility";
 export default function AnalyticsPage() {
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-6">Analytics Dashboard</h2>
+      <h2 className="text-2xl font-semibold mb-2">Analytics</h2>
+      <div className="mb-4 text-sm text-muted-foreground">Gain insights into your DAO’s financial health with our comprehensive analytics. Track performance, monitor asset allocation, and evaluate risk metrics—all in one place</div>
       <Tabs defaultValue="performance" className="space-y-4">
         <TabsList>
           <TabsTrigger value="performance">Performance</TabsTrigger>

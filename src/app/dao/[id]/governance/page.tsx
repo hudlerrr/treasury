@@ -23,6 +23,7 @@ export default async function GovernancePage({ params: { id } }: Props) {
 
   return (
     <div className="flex flex-col gap-2 px-4">
+      <h2 className="text-xl font-semibold mb-3">Governance</h2>
       <div className="mb-4 text-sm text-muted-foreground">
         This dashboard tracks the patterns of voting power within <strong>{dao.name}</strong>, giving a broad view of the entire DAO, also focusing in on the distribution of voting power of the top 50 delegates. It also examines the overall on-chain behaviour of <strong>{dao.name}</strong> delegators and assesses which areas of the chain they are active in.
       </div>

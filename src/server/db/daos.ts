@@ -12,7 +12,7 @@ export const daos = [
     href: "dao/tomoondao.eth",
     id: "tomoondao.eth",
     avatarSrc:
-      "https://cdn.stamp.fyi/space/s:cvx.eth?s=164&cb=ee88e4dd9fcaca10",
+      "https://cdn.stamp.fyi/space/s:tomoondao.eth",
     name: "MoonDAO",
     overview: {
       mission: "🌌 MoonDAO aims to decentralize access to space, creating a transparent and international approach to space exploration.",

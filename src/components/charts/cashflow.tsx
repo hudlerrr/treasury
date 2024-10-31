@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
   Card,
@@ -18,36 +18,38 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "Treasury Balance"
+export const description = "A multiple line chart"
 
 const chartData = [
-  { month: "Jan 2021", desktop: 186 },
-  { month: "Aug 2021", desktop: 305 },
-  { month: "Jan 2022", desktop: 237 },
-  { month: "Aug 2022", desktop: 73 },
-  { month: "Jan 2023", desktop: 209 },
-  { month: "Aug 2023", desktop: 214 },
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Outflow",
     color: "hsl(var(--chart-1))",
+  },
+  mobile: {
+    label: "Inflow",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
 
-export function TreasuryChart() {
+export function CashFlowChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Total Treasury Value Over Time</CardTitle>
-        <CardDescription>
-        Historical growth or decline of total treasury value
-        </CardDescription>
+        <CardTitle>Monthly Inflows and Outflows</CardTitle>
+        <CardDescription>Income sources vs. spending per month</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -63,18 +65,22 @@ export function TreasuryChart() {
               tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Area
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Line
               dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
+              type="monotone"
               stroke="var(--color-desktop)"
+              strokeWidth={2}
+              dot={false}
             />
-          </AreaChart>
+            <Line
+              dataKey="mobile"
+              type="monotone"
+              stroke="var(--color-mobile)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>

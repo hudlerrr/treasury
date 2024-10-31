@@ -19,7 +19,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "A donut chart with an active sector"
+export const description = " percentage of each asset type (e.g., stablecoins, governance tokens, native tokens) in the treasury"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -31,26 +31,26 @@ const chartData = [
 
 const chartConfig = {
   visitors: {
-    label: "Visitors",
+    label: "ETH",
   },
   chrome: {
-    label: "Chrome",
+    label: "ETH",
     color: "hsl(var(--chart-1))",
   },
   safari: {
-    label: "Safari",
+    label: "USDC",
     color: "hsl(var(--chart-2))",
   },
   firefox: {
-    label: "Firefox",
+    label: "MOONEY",
     color: "hsl(var(--chart-3))",
   },
   edge: {
-    label: "Edge",
+    label: "MATIC",
     color: "hsl(var(--chart-4))",
   },
   other: {
-    label: "Other",
+    label: "DAI",
     color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig
@@ -59,8 +59,8 @@ export function AssetDonut() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Treasury current balance</CardTitle>
-        {/* <CardDescription></CardDescription> */}
+        <CardTitle>Asset Breakdown</CardTitle>
+        <CardDescription>Percentage of each asset type (e.g., stablecoins, governance tokens, native tokens) in the treasury</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -74,8 +74,8 @@ export function AssetDonut() {
             />
             <Pie
               data={chartData}
-              dataKey="token"
-              nameKey="usd"
+              dataKey="visitors"
+              nameKey="browser"
               innerRadius={60}
               strokeWidth={5}
               activeIndex={0}
@@ -89,11 +89,6 @@ export function AssetDonut() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          Treasury current balance
-        </div>
-      </CardFooter>
     </Card>
   )
 }

@@ -14,9 +14,9 @@ const ProposalSchema = z.object({
   title: z.string(),
   body: z.string(),
   choices: z.array(z.string()),
-  start: z.number(),
-  end: z.number(),
-  snapshot: z.string(),
+  start: z.union([z.string(), z.number()]),
+  end: z.union([z.string(), z.number()]),
+  snapshot: z.union([z.string(), z.number()]),
   state: z.string(),
   author: z.string(),
   space: z.object({

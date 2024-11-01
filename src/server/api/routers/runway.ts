@@ -32,6 +32,7 @@ async function calculateRunway(address: string) {
 
   const totalSpent = Object.values(summaryResult.summary.outflows).reduce(
     (acc, token) => {
+      // @ts-expect-error TODO: add zod validation
       return acc + (token.totalValue || 0);
     },
     0,
@@ -41,6 +42,7 @@ async function calculateRunway(address: string) {
 
   // Calculate runway
   const runwayMonths =
+    // @ts-expect-error TODO: add zod validation
     averageMonthlySpend > 0 ? totalBalance / averageMonthlySpend : Infinity; // Avoid division by zero
   const runwayYears = Math.floor(runwayMonths / 12);
   const remainingMonths = Math.round(runwayMonths % 12);

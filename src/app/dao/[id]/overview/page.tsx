@@ -41,7 +41,9 @@ export default async function OverviewPage({ params: { id } }: Props) {
     dateRange: "month", // Default to month
   });
 
+  // @ts-expect-error TODO: fix object return type in server
   const inflow = cashFlowSummary.summary.inflows.totalValue;
+  // @ts-expect-error TODO: fix object return type in server
   const outflow = cashFlowSummary.summary.outflows.totalValue;
 
   return (

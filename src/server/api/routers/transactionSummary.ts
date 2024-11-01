@@ -67,10 +67,12 @@ async function getTxSummary(input: TxSummaryInput) {
       const tokenSymbol = tx.tokenSymbol;
       const tokenValue = Math.round(tx.value); // Keep the token value
 
+      // @ts-expect-error TODO: add zod validation
       if (!acc[category][tokenSymbol]) {
+        // @ts-expect-error TODO: add zod validation
         acc[category][tokenSymbol] = { tokenValue: 0 };
       }
-
+      // @ts-expect-error TODO: add zod validation
       acc[category][tokenSymbol].tokenValue += tokenValue; // Sum token values
 
       return acc;
@@ -83,11 +85,14 @@ async function getTxSummary(input: TxSummaryInput) {
   let totalOutflowsUSD = 0;
 
   for (const category of ["inflows", "outflows"]) {
+    // @ts-expect-error TODO: add zod validation
     for (const tokenSymbol in summary[category]) {
       const tokenPrice = await fetchTokenPrice(tokenSymbol);
       const totalValueInUSD = Math.round(
+        // @ts-expect-error TODO: add zod validation
         summary[category][tokenSymbol].tokenValue * tokenPrice,
       );
+      // @ts-expect-error TODO: add zod validation
       summary[category][tokenSymbol].totalValue = totalValueInUSD; // Update total value in USD
 
       if (category === "inflows") {
@@ -99,7 +104,9 @@ async function getTxSummary(input: TxSummaryInput) {
   }
 
   // Add total values to the summary
+  // @ts-expect-error TODO: add zod validation
   summary.inflows.totalValue = totalInflowsUSD;
+  // @ts-expect-error TODO: add zod validation
   summary.outflows.totalValue = totalOutflowsUSD;
 
   return {
@@ -132,6 +139,7 @@ async function fetchTokenPrice(tokenSymbol: string) {
     return price;
   } catch (error) {
     console.error(
+      // @ts-expect-error TODO: add zod validation
       `Error fetching price for token: ${tokenSymbol}. Error: ${error.message}`,
     );
     return 0;

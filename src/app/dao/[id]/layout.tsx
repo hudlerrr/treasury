@@ -71,21 +71,25 @@ export default function Component({ params: { id }, children }: Props) {
                 Reporting
               </Button>
             </Link>
-            <Link href={`/dao/${id}/forecasting`}>
+            <Link href={`/dao/${id}/simulation`}>
               <Button variant="ghost" className="w-full justify-start gap-2">
                 <Settings2 className="h-4 w-4" />
-                Scenario Planning
+                Simulation
               </Button>
             </Link>
           </nav>
+          <div className="text-center mt-20 mb-4"> 
+            <h3 className="text-sm font-semibold mb-1">Under Construction</h3> 
+            <p className="text-sm">👩‍🏗️</p>
+          </div>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1">
           {/* Header Banner */}
-          <div className="h-40 bg-muted/30 relative">
+          <div className="h-40 bg-muted/60 relative">
             <div className="absolute bottom-4 left-4 flex items-end gap-4">
-              <div className="h-20 w-20 rounded-full bg-background border-4 border-background overflow-hidden">
+              <div className="h-20 w-20 rounded-full bg-grey-500 border-4 border-grey-200 overflow-hidden">
                 <img
                   src={currentDAO.avatarSrc}
                   alt="DAO Logo"
@@ -103,6 +107,8 @@ export default function Component({ params: { id }, children }: Props) {
                   <span>${currentDAO.treasury} Total Value</span>
                   <span>•</span>
                   <span>{currentDAO.members} Holders</span>
+                  <span>•</span>
+                  <span className="text-purple-700">We're on our way to the moon (literally).</span>
                 </div>
               </div>
             </div>

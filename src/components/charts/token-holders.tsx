@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
   Card,
@@ -18,15 +18,15 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "Treasury Balance"
+export const description = "Token holders"
 
 const chartData = [
-  { month: "Jan 2021", desktop: 186 },
-  { month: "Aug 2021", desktop: 305 },
-  { month: "Jan 2022", desktop: 237 },
-  { month: "Aug 2022", desktop: 73 },
-  { month: "Jan 2023", desktop: 209 },
-  { month: "Aug 2023", desktop: 214 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
 ]
 
 const chartConfig = {
@@ -36,18 +36,16 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function TreasuryChart() {
+export function TokenHolders() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Total Treasury Value Over Time</CardTitle>
-        <CardDescription>
-        Historical growth or decline of total treasury value
-        </CardDescription>
+        <CardTitle>Token Holders</CardTitle>
+        <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -65,18 +63,26 @@ export function TreasuryChart() {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Area
+            <Line
               dataKey="desktop"
               type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
               stroke="var(--color-desktop)"
+              strokeWidth={2}
+              dot={false}
             />
-          </AreaChart>
+          </LineChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        {/* <div className="flex gap-2 font-medium leading-none">
+          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+        </div> */}
+        <div className="leading-none text-muted-foreground">
+          Showing number of MoonDAO token holders
+        </div>
+      </CardFooter>
     </Card>
   )
 }

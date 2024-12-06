@@ -44,7 +44,7 @@ export default function Home() {
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-gray-800">
-                  From disparate data to a cohesive strategy.
+                  The finance platform for DAOs.
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-600 md:text-xl dark:text-gray-400">
                   Track, analyze, and report on your treasury across multiple assets and platforms. Gain real-time insights, plan budgets, and make data-driven governance decisions—all in one place.

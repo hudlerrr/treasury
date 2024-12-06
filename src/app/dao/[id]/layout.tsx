@@ -78,8 +78,8 @@ export default function Component({ params: { id }, children }: Props) {
               </Button>
             </Link>
           </nav>
-          <div className="text-center mt-20 mb-4"> 
-            <h3 className="text-sm font-semibold mb-1">Under Construction</h3> 
+          <div className="text-center mt-4 mb-4">
+            <h3 className="text-sm font-semibold mb-1">Under Construction</h3>
             <p className="text-sm">👩‍🏗️</p>
           </div>
         </aside>

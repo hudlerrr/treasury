@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import ky from "ky";
+import { BASE_URLS } from '../../apiConstants';
 
 const BalanceItemSchema = z.object({
   tokenInfo: z.object({
@@ -42,8 +43,7 @@ export const safeBalanceRouter = createTRPCRouter({
   getBalance: publicProcedure
     .input(z.object({ address: z.string() }))
     .query(async ({ input }): Promise<GetBalanceResponse> => {
-      const baseUrl = "https://safe-client.safe.global/v1/chains/1/safes";
-      const endpoint = `${baseUrl}/${input.address}/balances/usd?trusted=true`;
+      const endpoint = `${BASE_URLS.SAFE}/${input.address}/balances/usd?trusted=true`;
       try {
         const data = await ky.get(endpoint).json();
         return processSafeBalance(data);

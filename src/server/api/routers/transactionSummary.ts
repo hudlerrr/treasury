@@ -3,6 +3,7 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 import { etherscanTxRouter } from "./etherscanTx";
 import axios from "axios";
 import { env } from "@/env.js";
+import { BASE_URLS } from '../../apiConstants';
 
 export const transactionSummaryRouter = createTRPCRouter({
   getSummary: publicProcedure
@@ -96,8 +97,7 @@ async function fetchTokenPrice(tokenSymbol: string) {
   try {
 
     if(tokenSymbol.includes("USD")) tokenSymbol = "usd"; // todo: is there a specific price for stablecoins
-    
-    const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`);
+    const response = await axios.get(`${BASE_URLS.COINGECKO}/price?ids=${tokenSymbol}&vs_currencies=usd&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`);
     const price = response.data[tokenSymbol.toLowerCase()]?.usd || 0; // Return price or 0 if not found
 
     if (price === 0) {

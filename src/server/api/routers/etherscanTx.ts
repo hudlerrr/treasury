@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import axios from "axios";
 import { env } from "@/env.js";
+import { BASE_URLS } from '../../apiConstants';
 
 export const etherscanTxRouter = createTRPCRouter({
   getTransactions: publicProcedure
@@ -13,8 +14,7 @@ export const etherscanTxRouter = createTRPCRouter({
       endDate: z.date().optional()
     }))
     .query(async ({ input }) => {
-      const baseUrl = "https://api.etherscan.io/api";
-      const endpoint = `${baseUrl}?module=account&action=tokentx&address=${input.address}&page=${input.page}&offset=${input.offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
+      const endpoint = `${BASE_URLS.ETHERSCAN}?module=account&action=tokentx&address=${input.address}&page=${input.page}&offset=${input.offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
       
       try {
         const response = await axios.get(endpoint);

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import axios from "axios";
 import { env } from "@/env.js";
+import { BASE_URLS } from '../../apiConstants';
 
 /*
 define the procedures that your API will expose
@@ -42,7 +43,7 @@ export const proposalRouter = createTRPCRouter({
       `;
 
       try {
-        const response = await axios.post('https://hub.snapshot.org/graphql', { query }, {
+        const response = await axios.post(BASE_URLS.SNAPSHOT, { query }, {
           headers: {
             'Content-Type': 'application/json',
           },

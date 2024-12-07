@@ -1,10 +1,13 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { etherscanTxRouter } from "./etherscanTx";
+import { transactionsRouter } from "./transactions";
 import axios from "axios";
 import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';
 
+/*
+router for fetching list of transactions from the Etherscan API.
+*/
 export const transactionSummaryRouter = createTRPCRouter({
   getSummary: publicProcedure
     .input(z.object({
@@ -37,7 +40,7 @@ export const transactionSummaryRouter = createTRPCRouter({
           break;
       }
 
-      const transactions = await etherscanTxRouter.createCaller(ctx).getTransactions({
+      const transactions = await transactionsRouter.createCaller(ctx).getTransactions({
         address: input.address,
         startDate,
         endDate,

@@ -5,7 +5,6 @@ import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';
 
 /*
-define the procedures that your API will expose
 router for fetching proposals from the Snapshot API.
 */
 export const proposalRouter = createTRPCRouter({

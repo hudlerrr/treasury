@@ -3,6 +3,10 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 import ky from "ky";
 import { BASE_URLS } from '../../apiConstants';
 
+/*
+router for fetching wallet balance and tokens from the Safe API.
+*/
+
 const BalanceItemSchema = z.object({
   tokenInfo: z.object({
     address: z.string(),
@@ -39,21 +43,21 @@ const GetBalanceResponseSchema = z.object({
 
 type GetBalanceResponse = z.infer<typeof GetBalanceResponseSchema>;
 
-export const safeBalanceRouter = createTRPCRouter({
+export const walletBalanceRouter = createTRPCRouter({
   getBalance: publicProcedure
     .input(z.object({ address: z.string() }))
     .query(async ({ input }): Promise<GetBalanceResponse> => {
       const endpoint = `${BASE_URLS.SAFE}/${input.address}/balances/usd?trusted=true`;
       try {
         const data = await ky.get(endpoint).json();
-        return processSafeBalance(data);
+        return processWalletBalance(data);
       } catch (error) {
         throw new Error("An unexpected error occurred", { cause: error });
       }
     }),
 });
 
-function processSafeBalance(data: unknown): GetBalanceResponse {
+function processWalletBalance(data: unknown): GetBalanceResponse {
     
   const parsedData = SafeBalanceDataSchema.parse(data);
 
@@ -79,7 +83,7 @@ function processSafeBalance(data: unknown): GetBalanceResponse {
 
   //todo: should gov tokens be included in total
   return GetBalanceResponseSchema.parse({
-    message: "Data received from Safe API",
+    message: "Wallet balances",
     balances: processedBalances,
     totalBalanceUsd: totalUsdBalance.toLocaleString(),
   });

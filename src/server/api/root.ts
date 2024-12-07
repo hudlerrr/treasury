@@ -1,22 +1,22 @@
 import { postRouter } from "./routers/post";
 import { createCallerFactory, createTRPCRouter } from "./trpc";
-import { safeBalanceRouter } from "./routers/safeBalance";
-import { etherscanTxRouter } from "./routers/etherscanTx";
+import { walletBalanceRouter } from "./routers/walletBalance";
+import { transactionsRouter } from "./routers/transactions";
 import { transactionSummaryRouter } from "./routers/transactionSummary";
 import { runwayRouter } from "./routers/runway";
 import { proposalRouter } from "./routers/proposals";
 import { daoRouter } from "./routers/dao/dao";
-import { daoBaseRouter } from "./routers/dao/daoBase";
+import { daoDetailsRouter } from "./routers/dao/daoDetails";
 
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  safe: safeBalanceRouter,
-  etherscan: etherscanTxRouter,
+  walletBalance: walletBalanceRouter,
+  transactions: transactionsRouter,
   transactionSummary: transactionSummaryRouter,
   runway: runwayRouter,
   proposals: proposalRouter,
   dao: daoRouter,
-  daoBase: daoBaseRouter,
+  daoDetails: daoDetailsRouter,
 });
 
 export type AppRouter = typeof appRouter;

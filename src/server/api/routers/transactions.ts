@@ -4,7 +4,10 @@ import axios from "axios";
 import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';
 
-export const etherscanTxRouter = createTRPCRouter({
+/*
+router for fetching list of transactions from the Etherscan API.
+*/
+export const transactionsRouter = createTRPCRouter({
   getTransactions: publicProcedure
     .input(z.object({ 
       address: z.string(),
@@ -20,7 +23,7 @@ export const etherscanTxRouter = createTRPCRouter({
         const response = await axios.get(endpoint);
         const data = response.data;
 
-        return processEtherscanTx(data.result, input.address, input.startDate, input.endDate);
+        return processTransactions(data.result, input.address, input.startDate, input.endDate);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           throw new Error(`Error fetching data from Etherscan API: ${error.message}`);
@@ -30,7 +33,7 @@ export const etherscanTxRouter = createTRPCRouter({
     }),
 });
 
-function processEtherscanTx(data: any[], inputAddress: string, startDate?: Date, endDate?: Date): any {
+function processTransactions(data: any[], inputAddress: string, startDate?: Date, endDate?: Date): any {
   const currentTime = Math.floor(Date.now() / 1000);
   
   return data

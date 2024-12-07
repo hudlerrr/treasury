@@ -14,11 +14,11 @@ type Props = {
 };
 
 export default async function OverviewPage({ params: { id } }: Props) {
-  const response = await api.daoBase.getInfo({ id });
+  const response = await api.daoDetails.getInfo({ id });
   const address = response[0].treasuries[0].address;
 
-  const balanceResponse = await api.safe.getBalance({ address });
-  const transactionsResponse = await api.etherscan.getTransactions({
+  const balanceResponse = await api.walletBalance.getBalance({ address });
+  const transactionsResponse = await api.transactions.getTransactions({
     address,
     page: 1,
     limit: 10,

@@ -19,7 +19,7 @@ async function calculateRunway(address: string, ctx: any) {
   const caller = createCaller(ctx);
 
   // Fetch total balance from SafeBalance endpoint
-  const balanceResult = await caller.safe.getBalance({ address });
+  const balanceResult = await caller.walletBalance.getBalance({ address });
   const totalBalance = parseFloat(balanceResult.totalBalanceUsd);
 
   // Fetch transaction summary to calculate average monthly spending
@@ -40,8 +40,7 @@ async function calculateRunway(address: string, ctx: any) {
   const averageMonthlySpend = totalSpent; // todo: enhance to get average spend instead of just last month
 
   // Calculate runway
-  const runwayMonths =
-    averageMonthlySpend > 0 ? totalBalance / averageMonthlySpend : Infinity; // Avoid division by zero
+  const runwayMonths = averageMonthlySpend > 0 ? totalBalance / averageMonthlySpend : Infinity; // Avoid division by zero
   const runwayYears = Math.floor(runwayMonths / 12);
   const remainingMonths = Math.round(runwayMonths % 12);
   const runway = `${runwayYears} years and ${remainingMonths} months`;

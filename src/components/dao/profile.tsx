@@ -10,7 +10,7 @@ type ProfileProps = {
 };
 
 export async function DaoProfileCard({ id }: ProfileProps) {
-  const response = await api.daoBase.getInfo({
+  const response = await api.daoDetails.getInfo({
     first: 20,
     skip: 0,
     orderBy: "created",

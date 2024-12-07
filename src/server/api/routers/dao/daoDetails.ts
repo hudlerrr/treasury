@@ -1,7 +1,7 @@
 import { z } from "zod";
 import ky from "ky";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { BASE_URLS } from '../../../apiConstants';
+import { BASE_URLS } from '../../apiConstants';
 
 const TreasurySchema = z.object({
   name: z.string(),

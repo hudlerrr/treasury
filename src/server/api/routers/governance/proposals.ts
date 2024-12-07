@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
 import axios from "axios";
 import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';

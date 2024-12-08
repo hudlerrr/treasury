@@ -1,19 +1,47 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../../trpc";
-import axios from "axios";
+import { createTRPCRouter, publicProcedure } from "../trpc";
+import ky from "ky";
 import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';
 
 /*
 router for fetching proposals from the Snapshot API.
 */
+const ProposalInputSchema = z.object({
+  space: z.string(),
+  first: z.number().default(10),
+  skip: z.number().default(0),
+});
+
+const ProposalSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  body: z.string(),
+  choices: z.array(z.string()),
+  start: z.union([z.string(), z.number()]),
+  end: z.union([z.string(), z.number()]),
+  snapshot: z.union([z.string(), z.number()]),
+  state: z.string(),
+  author: z.string(),
+  space: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+});
+
+const ProposalsResponseSchema = z.object({
+  data: z.object({
+    proposals: z.array(ProposalSchema),
+  }),
+});
+
+type ProposalInput = z.infer<typeof ProposalInputSchema>;
+type Proposal = z.infer<typeof ProposalSchema>;
+type ProposalsResponse = z.infer<typeof ProposalsResponseSchema>;
+
 export const proposalRouter = createTRPCRouter({
   getProposals: publicProcedure
-    .input(z.object({
-      space: z.string(),
-      first: z.number().default(10),
-      skip: z.number().default(0),
-    }))
+    .input(ProposalInputSchema)
     .query(async ({ input }) => {
       const { space, first, skip } = input;
 
@@ -42,17 +70,21 @@ export const proposalRouter = createTRPCRouter({
       `;
 
       try {
-        const response = await axios.post(BASE_URLS.SNAPSHOT, { query }, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await ky
+          .post(BASE_URLS.SNAPSHOT, {
+            json: { query },
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .json<ProposalsResponse>();
 
-        return response.data.data.proposals;
+        const parsedResponse = ProposalsResponseSchema.parse(response);
+
+        return parsedResponse.data.proposals;
       } catch (error) {
-        console.error('Error fetching proposals:', error);
-        throw new Error('An error occurred while fetching proposals');
+        console.error("Error fetching proposals:", error);
+        throw new Error("An error occurred while fetching proposals");
       }
     }),
 });
-

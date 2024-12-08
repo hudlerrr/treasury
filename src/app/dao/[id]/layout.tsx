@@ -1,10 +1,19 @@
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { BarChart3, FileText, GitFork, Menu, Moon, Search, Settings2, Wallet } from "lucide-react"
-import Image from "next/image"
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  BarChart3,
+  FileText,
+  GitFork,
+  Menu,
+  Moon,
+  Search,
+  Settings2,
+  Wallet,
+} from "lucide-react";
+import Image from "next/image";
 import { daos } from "@/server/db/daos";
 
 type Props = {
@@ -20,7 +29,7 @@ export default function Component({ params: { id }, children }: Props) {
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
       <header className="border-b">
-        <div className="flex h-16 items-center px-4 gap-4">
+        <div className="flex h-16 items-center gap-4 px-4">
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-6 w-6" />
           </Button>
@@ -28,12 +37,12 @@ export default function Component({ params: { id }, children }: Props) {
             <Wallet className="h-6 w-6" />
             <span className="font-semibold">TreasureCorp</span>
           </div>
-          <div className="flex-1 flex items-center gap-4 ml-4">
+          <div className="ml-4 flex flex-1 items-center gap-4">
             <div className="relative w-full max-w-md">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search treasury metrics..."
-                className="pl-8 w-full bg-muted"
+                className="w-full bg-muted pl-8"
               />
             </div>
           </div>
@@ -45,7 +54,7 @@ export default function Component({ params: { id }, children }: Props) {
       </header>
 
       <div className="flex">
-        <aside className="hidden md:flex w-56 flex-col border-r h-[calc(100vh-4rem)]">
+        <aside className="hidden h-[calc(100vh-4rem)] w-56 flex-col border-r md:flex">
           <nav className="grid gap-1 p-4">
             <Link href={`/dao/${id}/overview`}>
               <Button variant="ghost" className="w-full justify-start gap-2">
@@ -87,11 +96,11 @@ export default function Component({ params: { id }, children }: Props) {
         {/* Main Content */}
         <main className="flex-1">
           {/* Header Banner */}
-          <div className="h-40 bg-muted/60 relative">
+          <div className="relative h-40 bg-muted/60">
             <div className="absolute bottom-4 left-4 flex items-end gap-4">
-              <div className="h-20 w-20 rounded-full bg-grey-500 border-4 border-grey-200 overflow-hidden">
+              <div className="bg-grey-500 border-grey-200 h-20 w-20 overflow-hidden rounded-full border-4">
                 <img
-                  src={currentDAO.avatarSrc}
+                  src={currentDAO?.avatarSrc}
                   alt="DAO Logo"
                   width={80}
                   height={80}
@@ -99,16 +108,18 @@ export default function Component({ params: { id }, children }: Props) {
                 />
               </div>
               <div className="mb-2">
-                <h1 className="text-2xl font-bold flex items-center gap-2">
-                  {currentDAO.name}
+                <h1 className="flex items-center gap-2 text-2xl font-bold">
+                  {currentDAO?.name}
                   <Badge variant="secondary">Verified</Badge>
                 </h1>
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <span>${currentDAO.treasury} Total Value</span>
+                  <span>${currentDAO?.treasury} Total Value</span>
                   <span>•</span>
-                  <span>{currentDAO.members} Holders</span>
+                  <span>{currentDAO?.members} Holders</span>
                   <span>•</span>
-                  <span className="text-purple-700">We're on our way to the moon (literally).</span>
+                  <span className="text-purple-700">
+                    We&apos;re on our way to the moon (literally).
+                  </span>
                 </div>
               </div>
             </div>
@@ -122,5 +133,5 @@ export default function Component({ params: { id }, children }: Props) {
         </main>
       </div>
     </div>
-  )
+  );
 }

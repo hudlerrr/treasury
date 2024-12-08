@@ -14,14 +14,18 @@ type Props = {
 };
 
 export default async function OverviewPage({ params: { id } }: Props) {
-  const response = await api.daoDetails.getInfo({ id });
-  const address = response[0].treasuries[0].address;
+  const response = await api.daoBase.getInfo({ id });
+  const address = response?.[0]?.treasuries?.[0]?.address ?? null;
+
+  if (!address) {
+    return <div>DAO not found</div>;
+  }
 
   const balanceResponse = await api.walletBalance.getBalance({ address });
   const transactionsResponse = await api.transactions.getTransactions({
     address,
     page: 1,
-    limit: 10,
+    // limit: 10,
   });
 
   const dao = daos.find((dao) => dao.id === id);
@@ -37,13 +41,15 @@ export default async function OverviewPage({ params: { id } }: Props) {
     dateRange: "month", // Default to month
   });
 
+  // @ts-expect-error TODO: fix object return type in server
   const inflow = cashFlowSummary.summary.inflows.totalValue;
+  // @ts-expect-error TODO: fix object return type in server
   const outflow = cashFlowSummary.summary.outflows.totalValue;
 
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-3">Overview</h2>
+        <h2 className="mb-3 text-xl font-semibold">Overview</h2>
         <ul className="text-muted-foreground">
           {overview && (
             <>
@@ -57,18 +63,27 @@ export default async function OverviewPage({ params: { id } }: Props) {
       </div>
 
       <div className="flex space-x-4">
-        <div className="space-y-4 flex-1">
-          <TabbedInterface balanceResponse={balanceResponse} transactionsResponse={transactionsResponse} />
+        <div className="flex-1 space-y-4">
+          <TabbedInterface
+            balanceResponse={balanceResponse}
+            transactionsResponse={transactionsResponse}
+          />
         </div>
-        <div className="space-y-4 flex-1">
-          <div className="flex flex-col items-center mb-4">
-            <h2 className="font-semibold">Over the past month, your cash flow has been:</h2>
+        <div className="flex-1 space-y-4">
+          <div className="mb-4 flex flex-col items-center">
+            <h2 className="font-semibold">
+              Over the past month, your cash flow has been:
+            </h2>
             <div className="flex flex-col items-center">
-              <div className="text-sm text-muted-foreground">Inflow: ${inflow.toLocaleString()}</div>
-              <div className="text-sm text-muted-foreground">Outflow: ${outflow.toLocaleString()}</div>
+              <div className="text-sm text-muted-foreground">
+                Inflow: ${inflow.toLocaleString()}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Outflow: ${outflow.toLocaleString()}
+              </div>
             </div>
           </div>
-          <FinancialDashboard/>
+          <FinancialDashboard />
           <div className="flex flex-col space-y-4">
             <div className="space-y-2">
               <TreasuryChart />

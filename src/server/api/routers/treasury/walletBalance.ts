@@ -46,19 +46,23 @@ type GetBalanceResponse = z.infer<typeof GetBalanceResponseSchema>;
 export const walletBalanceRouter = createTRPCRouter({
   getBalance: publicProcedure
     .input(z.object({ address: z.string() }))
-    .query(async ({ input }): Promise<GetBalanceResponse> => {
-      const endpoint = `${BASE_URLS.SAFE}/${input.address}/balances/usd?trusted=true`;
-      try {
-        const data = await ky.get(endpoint).json();
-        return processWalletBalance(data);
-      } catch (error) {
-        throw new Error("An unexpected error occurred", { cause: error });
-      }
+    .query(async ({ input: { address } }): Promise<GetBalanceResponse> => {
+      return getSafeBalance({ address });
     }),
 });
 
+async function getSafeBalance({ address }: { address: string }) {
+  const baseUrl = "https://safe-client.safe.global/v1/chains/1/safes";
+  const endpoint = `${baseUrl}/${address}/balances/usd?trusted=true`;
+  try {
+    const data = await ky.get(endpoint).json();
+    return processSafeBalance(data);
+  } catch (error) {
+    throw new Error("An unexpected error occurred", { cause: error });
+  }
+}
+
 function processWalletBalance(data: unknown): GetBalanceResponse {
-    
   const parsedData = SafeBalanceDataSchema.parse(data);
 
   const totalUsdBalance = parseFloat(parsedData.fiatTotal);
@@ -88,3 +92,5 @@ function processWalletBalance(data: unknown): GetBalanceResponse {
     totalBalanceUsd: totalUsdBalance.toLocaleString(),
   });
 }
+
+export { getSafeBalance };

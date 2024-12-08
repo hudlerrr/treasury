@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
-import { getEtherscanTx } from "./etherscanTx";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
+import { getEtherscanTx } from "./transactions";
 import axios from "axios";
 import { env } from "@/env.js";
+import { BASE_URLS } from '../../apiConstants';
 
 const txSummaryInputSchema = z.object({
   address: z.string(),
@@ -13,6 +14,9 @@ const txSummaryInputSchema = z.object({
 
 type TxSummaryInput = z.infer<typeof txSummaryInputSchema>;
 
+/*
+router for fetching list of transactions from the Etherscan API.
+*/
 export const transactionSummaryRouter = createTRPCRouter({
   getSummary: publicProcedure
     .input(txSummaryInputSchema)
@@ -122,11 +126,9 @@ async function fetchTokenPrice(tokenSymbol: string) {
   // todo: see if api can take a list of token symbols (429)
   // todo: filter out random tokens
   try {
-    if (tokenSymbol.includes("USD")) tokenSymbol = "usd"; // todo: is there a specific price for stablecoins
 
-    const response = await axios.get(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`,
-    );
+    if(tokenSymbol.includes("USD")) tokenSymbol = "usd"; // todo: is there a specific price for stablecoins
+    const response = await axios.get(`${BASE_URLS.COINGECKO}/price?ids=${tokenSymbol}&vs_currencies=usd&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`);
     const price = response.data[tokenSymbol.toLowerCase()]?.usd || 0; // Return price or 0 if not found
 
     if (price === 0) {

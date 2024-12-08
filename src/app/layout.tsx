@@ -6,8 +6,8 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
-  title: "DAOnalytics",
-  description: "Dao Analytics",
+  title: "TreasureCorp",
+  description: "Treasury clarity for the decentralized world.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

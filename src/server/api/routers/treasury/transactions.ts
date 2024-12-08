@@ -1,8 +1,13 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
+import axios from "axios";
 import ky from "ky";
 import { env } from "@/env.js";
+import { BASE_URLS } from '../../apiConstants';
 
+/*
+router for fetching list of transactions from the Etherscan API.
+*/
 const EtherscanInputSchema = z.object({
   address: z.string(),
   page: z.number().default(1),
@@ -30,7 +35,7 @@ type EtherscanInput = z.infer<typeof EtherscanInputSchema>;
 type Transaction = z.infer<typeof TransactionSchema>;
 type EtherscanResponse = z.infer<typeof EtherscanResponseSchema>;
 
-export const etherscanTxRouter = createTRPCRouter({
+export const transactionsRouter = createTRPCRouter({
   getTransactions: publicProcedure
     .input(EtherscanInputSchema)
     .query(async ({ input }) => {
@@ -45,8 +50,7 @@ async function getEtherscanTx({
   startDate,
   endDate,
 }: EtherscanInput) {
-  const baseUrl = "https://api.etherscan.io/api";
-  const endpoint = `${baseUrl}?module=account&action=tokentx&address=${address}&page=${page}&offset=${offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
+  const endpoint = `${BASE_URLS.ETHERSCAN}?module=account&action=tokentx&address=${address}&page=${page}&offset=${offset}&sort=desc&apikey=${env.ETHERSCAN_API_KEY}`;
 
   try {
     const response = await ky.get(endpoint).json<EtherscanResponse>();

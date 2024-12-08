@@ -54,8 +54,8 @@ export default function Home() {
           <div className="container relative px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter text-gray-800 sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  From disparate data to a cohesive strategy.
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-gray-800">
+                  The finance platform for DAOs.
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-600 dark:text-gray-400 md:text-xl">
                   Track, analyze, and report on your treasury across multiple

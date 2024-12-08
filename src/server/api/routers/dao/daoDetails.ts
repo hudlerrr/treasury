@@ -1,6 +1,7 @@
 import { z } from "zod";
 import ky from "ky";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { BASE_URLS } from '../../apiConstants';
 
 const TreasurySchema = z.object({
   name: z.string(),
@@ -34,7 +35,7 @@ const SpacesResponseSchema = z.object({
   }),
 });
 
-export const daoBaseRouter = createTRPCRouter({
+export const daoDetailsRouter = createTRPCRouter({
   getInfo: publicProcedure
     .input(
       z.object({
@@ -80,7 +81,7 @@ export const daoBaseRouter = createTRPCRouter({
 
       try {
         const response = await ky
-          .post("https://hub.snapshot.org/graphql", {
+          .post(BASE_URLS.SNAPSHOT, {
             json: { query },
           })
           .json();

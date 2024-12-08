@@ -47,16 +47,15 @@ export const walletBalanceRouter = createTRPCRouter({
   getBalance: publicProcedure
     .input(z.object({ address: z.string() }))
     .query(async ({ input: { address } }): Promise<GetBalanceResponse> => {
-      return getSafeBalance({ address });
+      return getWalletBalance({ address });
     }),
 });
 
-async function getSafeBalance({ address }: { address: string }) {
-  const baseUrl = "https://safe-client.safe.global/v1/chains/1/safes";
-  const endpoint = `${baseUrl}/${address}/balances/usd?trusted=true`;
+async function getWalletBalance({ address }: { address: string }) {
+  const endpoint = `${BASE_URLS.SAFE}/${address}/balances/usd?trusted=true`;
   try {
     const data = await ky.get(endpoint).json();
-    return processSafeBalance(data);
+    return processWalletBalance(data);
   } catch (error) {
     throw new Error("An unexpected error occurred", { cause: error });
   }
@@ -93,4 +92,4 @@ function processWalletBalance(data: unknown): GetBalanceResponse {
   });
 }
 
-export { getSafeBalance };
+export { getWalletBalance };

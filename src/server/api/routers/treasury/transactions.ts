@@ -1,39 +1,13 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../../trpc";
 import axios from "axios";
+import ky from "ky";
 import { env } from "@/env.js";
 import { BASE_URLS } from '../../apiConstants';
 
 /*
 router for fetching list of transactions from the Etherscan API.
 */
-const EtherscanInputSchema = z.object({
-  address: z.string(),
-  page: z.number().default(1),
-  offset: z.number().default(10),
-  startDate: z.date().optional(),
-  endDate: z.date().optional(),
-});
-
-const TransactionSchema = z.object({
-  timeStamp: z.string(),
-  value: z.string(),
-  tokenSymbol: z.string(),
-  tokenDecimal: z.string(),
-  to: z.string(),
-  hash: z.string(),
-});
-
-const EtherscanResponseSchema = z.object({
-  status: z.string(),
-  message: z.string(),
-  result: z.array(TransactionSchema),
-});
-
-type EtherscanInput = z.infer<typeof EtherscanInputSchema>;
-type Transaction = z.infer<typeof TransactionSchema>;
-type EtherscanResponse = z.infer<typeof EtherscanResponseSchema>;
-
 const EtherscanInputSchema = z.object({
   address: z.string(),
   page: z.number().default(1),

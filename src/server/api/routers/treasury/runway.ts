@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "../../trpc";
 import { z } from "zod";
 import { createCaller } from "@/server/api/root";
-import { getSafeBalance } from "./safeBalance";
+import { getWalletBalance } from "./walletBalance";
 import { getTxSummary } from "./transactionSummary";
 
 export const runwayRouter = createTRPCRouter({
@@ -19,7 +19,7 @@ export const runwayRouter = createTRPCRouter({
 
 async function calculateRunway(address: string) {
   // Fetch total balance from SafeBalance endpoint
-  const balanceResult = await getSafeBalance({ address });
+  const balanceResult = await getWalletBalance({ address });
   const totalBalance = parseFloat(balanceResult.totalBalanceUsd);
 
   // Fetch transaction summary to calculate average monthly spending

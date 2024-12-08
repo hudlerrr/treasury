@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default async function OverviewPage({ params: { id } }: Props) {
-  const response = await api.daoBase.getInfo({ id });
+  const response = await api.daoDetails.getInfo({ id });
   const address = response?.[0]?.treasuries?.[0]?.address ?? null;
 
   if (!address) {

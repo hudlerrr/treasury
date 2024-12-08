@@ -1,12 +1,8 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
 import ky from "ky";
 import { env } from "@/env.js";
-import { BASE_URLS } from '../../apiConstants';
 
-/*
-router for fetching proposals from the Snapshot API.
-*/
 const ProposalInputSchema = z.object({
   space: z.string(),
   first: z.number().default(10),
@@ -71,7 +67,7 @@ export const proposalRouter = createTRPCRouter({
 
       try {
         const response = await ky
-          .post(BASE_URLS.SNAPSHOT, {
+          .post("https://hub.snapshot.org/graphql", {
             json: { query },
             headers: {
               "Content-Type": "application/json",
